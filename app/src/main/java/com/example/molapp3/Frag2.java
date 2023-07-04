@@ -42,11 +42,19 @@ public class Frag2 extends Fragment {
     Uri uri;
     ImageView imageView;
 
-    ArrayList<Uri> selectedImages = new ArrayList<>();
+    static ArrayList<Uri> selectedImages = new ArrayList<>();
 
     private MyGridAdapter gAdapter;
 
     private boolean isInitialized = false;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        System.out.printf("onResume\n");
+        Log.d("ArrayList", String.valueOf(selectedImages));
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
