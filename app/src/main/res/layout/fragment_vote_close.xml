@@ -30,15 +30,15 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+<!--        <ImageView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"/>-->
 
-        <TextView
-            android:id="@+id/tv1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
+<!--        <TextView-->
+<!--            android:id="@+id/tv1"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="TextView" />-->
     </androidx.recyclerview.widget.RecyclerView>
 
     <android.widget.Button
@@ -54,7 +54,7 @@
         android:text="입력완료" />
 
     <ImageView
-        android:id="@+id/iv"
+        android:id="@+id/iv_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 </LinearLayout>

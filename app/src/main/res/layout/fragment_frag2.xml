@@ -1,34 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_margin="5dp"
     android:orientation="vertical">
 
-    <GridView
-        android:id="@+id/gridView"
+<!--    <GridView-->
+<!--        android:id="@+id/gridView"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:clipToPadding="false"-->
+<!--        android:drawSelectorOnTop="true"-->
+<!--        android:gravity="center"-->
+<!--        android:horizontalSpacing="10dp"-->
+<!--        android:numColumns="4"-->
+<!--        android:verticalSpacing="10dp">-->
+
+<!--    </GridView>-->
+
+<!--    &lt;!&ndash;    <android.widget.Button&ndash;&gt;-->
+<!--    &lt;!&ndash;        android:id="@+id/btn_album"&ndash;&gt;-->
+<!--    &lt;!&ndash;        android:layout_width="wrap_content"&ndash;&gt;-->
+<!--    &lt;!&ndash;        android:layout_height="wrap_content"&ndash;&gt;-->
+<!--    &lt;!&ndash;        android:layout_weight="1"&ndash;&gt;-->
+<!--    &lt;!&ndash;        android:text="앨범으로 추가하기" />&ndash;&gt;-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="10dp" />-->
+
+    <include
+        layout="@layout/fragment_frag2_include"
+        android:layout_width="match_parent"
+        android:layout_height="712dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:drawSelectorOnTop="true"
-        android:gravity="center"
-        android:horizontalSpacing="10dp"
-        android:numColumns="4"
-        android:verticalSpacing="10dp">
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:src="@drawable/add"
+        app:maxImageSize="35dp"
+        android:elevation="0dp"
+        app:useCompatPadding="false"
+        />
 
-    </GridView>
-
-    <android.widget.Button
-        android:id="@+id/btn_album"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="앨범으로 추가하기" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp" />
-
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

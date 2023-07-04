@@ -28,6 +28,8 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -67,7 +69,8 @@ public class Frag2 extends Fragment {
             gAdapter = new MyGridAdapter(requireContext());
             gv.setAdapter(gAdapter);
 
-            Button btn_album = rootView.findViewById(R.id.btn_album);
+//            Button btn_album = rootView.findViewById(R.id.btn_album);
+            FloatingActionButton btn_album = rootView.findViewById(R.id.fab_add);
             imageView = rootView.findViewById(R.id.imageView);
 
             btn_album.setOnClickListener(new View.OnClickListener() {
@@ -95,17 +98,17 @@ public class Frag2 extends Fragment {
                         System.out.println("클릭한 이미지의 uri: "+uri); // uri 제대로 추출됨
                         Log.d("ArrayList", String.valueOf(selectedImages)); // arraylist에 uri 제대로 저장됨
 
-                        // 앨범에서 선택한 이미지 아래에 띄우기
-                        try {
-                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), uri);
-                            imageView.setImageBitmap(bitmap);
-                            Bitmap thumbnail = ThumbnailUtils.extractThumbnail(bitmap, 300, 300);
-                            imageView.setImageBitmap(thumbnail);
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+//                        // 앨범에서 선택한 이미지 아래에 띄우기
+//                        try {
+//                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), uri);
+//                            imageView.setImageBitmap(bitmap);
+//                            Bitmap thumbnail = ThumbnailUtils.extractThumbnail(bitmap, 300, 300);
+//                            imageView.setImageBitmap(thumbnail);
+//                        } catch (FileNotFoundException e) {
+//                            e.printStackTrace();
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
                     }
                 }
             }
