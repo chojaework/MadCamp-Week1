@@ -96,16 +96,16 @@ public class Frag2 extends Fragment {
                         Log.d("ArrayList", String.valueOf(selectedImages)); // arraylist에 uri 제대로 저장됨
 
                         // 앨범에서 선택한 이미지 아래에 띄우기
-//                        try {
-//                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), uri);
-//                            imageView.setImageBitmap(bitmap);
-//                            Bitmap thumbnail = ThumbnailUtils.extractThumbnail(bitmap, 300, 300);
-//                            imageView.setImageBitmap(thumbnail);
-//                        } catch (FileNotFoundException e) {
-//                            e.printStackTrace();
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
+                        try {
+                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), uri);
+                            imageView.setImageBitmap(bitmap);
+                            Bitmap thumbnail = ThumbnailUtils.extractThumbnail(bitmap, 300, 300);
+                            imageView.setImageBitmap(thumbnail);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }

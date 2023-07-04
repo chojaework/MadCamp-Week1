@@ -8,6 +8,14 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack(); // 이전 Fragment로 이동
+        } else {
+            super.onBackPressed(); // 기본 뒤로가기 동작 수행
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,18 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/btn_back1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Frag3">
 
     <!-- TODO: Update blank fragment layout -->
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="미정 페이지입니다~"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="투표 유형을 선택해주세요"
         android:textAlignment="center"
         android:textSize="24sp" />
 
-</FrameLayout>
+    <android.widget.Button
+        android:id="@+id/btn_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="익명 투표" />
+
+    <android.widget.Button
+        android:id="@+id/btn_open"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="기명 투표" />
+
+
+</LinearLayout>
