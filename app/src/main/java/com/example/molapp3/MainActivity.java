@@ -25,9 +25,13 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         Button btn_contact = findViewById(R.id.btn_contact);
+        Button btn_image = findViewById(R.id.btn_image);
+        Button btn_vote = findViewById(R.id.btn_vote);
         btn_contact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                btn_contact
 
                 fragmentManager.beginTransaction()
                         .replace(R.id.fragmentContainerView, Frag1.class, null)
@@ -37,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button btn_image = findViewById(R.id.btn_image);
+
         btn_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button btn = findViewById(R.id.btn);
-        btn.setOnClickListener(new View.OnClickListener() {
+
+        btn_vote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
