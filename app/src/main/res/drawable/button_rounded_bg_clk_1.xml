@@ -19,5 +19,5 @@
 <!--            <solid android:color="#3F51B5"/>-->
 <!--        </shape>-->
 <!--    </item>-->
-    <solid android:color="@color/white"/>
+    <solid android:color="@color/navy"/>
 </shape>

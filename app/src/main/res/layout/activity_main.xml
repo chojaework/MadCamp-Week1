@@ -14,7 +14,8 @@
         android:layout_height="35dp"
         android:layout_gravity="bottom"
         android:gravity="bottom"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@drawable/button_background">
 
         <android.widget.Button
             android:id="@+id/btn_contact"
@@ -22,9 +23,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:elevation="4dp"
-            android:background="@drawable/button_rounded_bg_1"
-            android:text="Contact"
-            android:textColor="@color/navy"
+            android:background="@drawable/button_rounded_bg_clk_1"
+            android:text="연락처"
+            android:textColor="@color/white"
             android:textSize="14sp" />
 
         <android.widget.Button
@@ -34,7 +35,7 @@
             android:layout_weight="1"
             android:elevation="4dp"
             android:background="@drawable/button_rounded_bg_2"
-            android:text="Image"
+            android:text="이미지"
             android:textColor="@color/navy"
             android:textSize="14sp" />
 
@@ -45,7 +46,7 @@
             android:layout_weight="1"
             android:background="@drawable/button_rounded_bg_3"
             android:elevation="4dp"
-            android:text="Vote"
+            android:text="투표"
             android:textColor="@color/navy"
             android:textSize="14sp" />
     </LinearLayout>
