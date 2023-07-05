@@ -1,64 +1,99 @@
 package com.example.molapp3;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.media.ThumbnailUtils;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link VoteStart#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.io.IOException;
+import java.util.ArrayList;
+
 public class VoteStart extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public VoteStart() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment VoteStart.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static VoteStart newInstance(String param1, String param2) {
-        VoteStart fragment = new VoteStart();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
+    ArrayList<VoteClose.ListItem> arrayList = null;
+    private Uri uriImg;
+    private ListViewAdapter_start adapter;
+    private ListView listView;
+//    private VoteClose.ListViewAdapter adapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View rootView =  inflater.inflate(R.layout.fragment_vote_start, container, false);
+        Bundle bundle = getArguments();
+
+        if (bundle != null) {
+            arrayList = bundle.getParcelableArrayList("arrayList");
+        }
+        Log.d("ArrayListText",arrayList.get(0).getText());
+        Log.d("ArrayListImageUri", arrayList.get(0).getImgUri());
+        Log.d("ArrayList", String.valueOf(arrayList));
+        adapter = new ListViewAdapter_start(requireContext(), arrayList);
+        listView = rootView.findViewById(R.id.lv_cand);
+        listView.setAdapter(adapter);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_vote_start, container, false);
+        return rootView;
+    }
+    public class ListViewAdapter_start extends BaseAdapter {
+        private ArrayList<VoteClose.ListItem> list;
+        private Context context;
+
+        public ListViewAdapter_start(Context context, ArrayList<VoteClose.ListItem> list) {
+            this.context = context;
+            this.list = list;
+        }
+
+        @Override
+        public int getCount() {
+            return list.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return list.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            @SuppressLint("ViewHolder")
+            View view = LayoutInflater.from(context).inflate(R.layout.listview_close_item, null);
+            ImageView iv = view.findViewById(R.id.iv_lv_close);
+//            Glide.with(view).load(list.get(position).getImgUri()).into(iv);
+            try {
+                uriImg = Uri.parse(arrayList.get(position).getImgUri());
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uriImg);
+                Bitmap thumbnail = ThumbnailUtils.extractThumbnail(bitmap, 300, 300);
+                iv.setImageBitmap(thumbnail);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            TextView tv = view.findViewById(R.id.tv_lv_close);
+//            tv.setText((CharSequence) arrayList.get(position));
+//            tv.setText("Index"+position);
+            tv.setText(arrayList.get(position).getText());
+//            arrayList.get(position).text
+            //ListView의 텍스트를 setText해야 한다
+//            tv.setText();
+            return view;
+        }
+
+
     }
 }

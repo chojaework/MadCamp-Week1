@@ -78,6 +78,8 @@ public class Frag2 extends Fragment {
                 public void onClick(View v) {
                     Intent intent = new Intent(Intent.ACTION_PICK);
                     intent.setType("image/*");
+                    // galleryLauncher에서 갤러리가 열리고
+                    // 이미지가 gridview에 추가
                     galleryLauncher.launch(intent);
                 }
             });
