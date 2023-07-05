@@ -1,5 +1,6 @@
 package com.example.molapp3;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHolder> {
+public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactViewHolder> {
 
     private List<Contact> contactList;
     private OnItemClickListener listener;
-    private int selectedPosition = RecyclerView.NO_POSITION;
 
     public ContactAdapter(List<Contact> contactList, OnItemClickListener listener) {
         this.contactList = contactList;
@@ -23,15 +23,15 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ContactViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.contact_item, parent, false);
-        return new ViewHolder(view);
+        return new ContactViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ContactViewHolder holder, int position) {
         Contact contact = contactList.get(position);
-        holder.bind(contact);
+        holder.bind(contact, listener);
     }
 
     @Override
@@ -39,60 +39,33 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         return contactList.size();
     }
 
-    public void setContacts(List<Contact> contacts) {
-        contactList = contacts;
-        notifyDataSetChanged();
-    }
-
-    public int getSelectedPosition() {
-        return selectedPosition;
-    }
-
     public interface OnItemClickListener {
         void onItemClick(int position);
-
-        void onItemLongClick(int position);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+    public static class ContactViewHolder extends RecyclerView.ViewHolder {
+
         private TextView nameTextView;
         private TextView phoneTextView;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ContactViewHolder(@NonNull View itemView) {
             super(itemView);
             nameTextView = itemView.findViewById(R.id.nameTextView);
             phoneTextView = itemView.findViewById(R.id.phoneTextView);
-
-            itemView.setOnClickListener(this);
-            itemView.setOnLongClickListener(this);
         }
 
-        public void bind(Contact contact) {
+        public void bind(Contact contact, OnItemClickListener listener) {
             nameTextView.setText(contact.getName());
             phoneTextView.setText(contact.getPhone());
-
-            itemView.setSelected(getAdapterPosition() == selectedPosition);
-        }
-
-        @Override
-        public void onClick(View v) {
-            int position = getAdapterPosition();
-            if (position != RecyclerView.NO_POSITION) {
-                selectedPosition = position;
-                notifyDataSetChanged();
-                listener.onItemClick(position);
-            }
-        }
-
-        @Override
-        public boolean onLongClick(View v) {
-            boolean result = false;
-            int position = getAdapterPosition();
-            if (position != RecyclerView.NO_POSITION) {
-                listener.onItemLongClick(position);
-                result = true;
-            }
-            return result;
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(position);
+                    }
+                }
+            });
         }
     }
 }

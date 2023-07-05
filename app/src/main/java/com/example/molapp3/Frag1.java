@@ -1,21 +1,14 @@
 package com.example.molapp3;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.os.Build;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,19 +21,14 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Frag1 extends Fragment implements ContactAdapter.OnItemClickListener {
-
-    private static final int REQUEST_PERMISSION = 1;
     private static final String FILE_NAME = "contacts.json";
 
-    private EditText nameEditText;
-    private EditText phoneEditText;
     private Button addButton;
-    private Button updateButton;
-    private Button deleteButton;
     private RecyclerView recyclerView;
 
     private List<Contact> contactList;
@@ -48,133 +36,78 @@ public class Frag1 extends Fragment implements ContactAdapter.OnItemClickListene
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_frag1, container, false);
+        View fragmentView = inflater.inflate(R.layout.fragment_frag1, container, false);
 
-        nameEditText = view.findViewById(R.id.nameEditText);
-        phoneEditText = view.findViewById(R.id.phoneEditText);
-        addButton = view.findViewById(R.id.addButton);
-        updateButton = view.findViewById(R.id.modifyButton);
-        deleteButton = view.findViewById(R.id.deleteButton);
-        recyclerView = view.findViewById(R.id.recyclerView);
+        addButton = fragmentView.findViewById(R.id.addButton);
+        recyclerView = fragmentView.findViewById(R.id.recyclerView);
 
         contactList = new ArrayList<>();
+        readContactsFromJson();
         contactAdapter = new ContactAdapter(contactList, this);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerView.setAdapter(contactAdapter);
 
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String name = nameEditText.getText().toString();
-                String phone = phoneEditText.getText().toString();
-                if (!name.isEmpty() && !phone.isEmpty()) {
-                    Contact contact = new Contact(name, phone);
-                    contactList.add(contact);
-                    saveContactsToJson();
-                    contactAdapter.notifyDataSetChanged();
-                    clearInputFields();
-                    showToast("Contact Added");
-                } else {
-                    showToast("Please enter name and phone number");
-                }
-            }
-        });
+        addButton.setOnClickListener(v -> openEditContactActivity(null));
 
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSION);
-        } else {
-            performFileOperations();
-        }
-
-        updateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = contactAdapter.getSelectedPosition();
-                if (position != RecyclerView.NO_POSITION) {
-                    String name = nameEditText.getText().toString();
-                    String phone = phoneEditText.getText().toString();
-                    if (!name.isEmpty() && !phone.isEmpty()) {
-                        Contact contact = contactList.get(position);
-                        contact.setName(name);
-                        contact.setPhone(phone);
-                        saveContactsToJson();
-                        contactAdapter.notifyDataSetChanged();
-                        clearInputFields();
-                        showToast("Contact Updated");
-                    } else {
-                        showToast("Please enter name and phone number");
-                    }
-                } else {
-                    showToast("Please select a contact to update");
-                }
-            }
-        });
-
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = contactAdapter.getSelectedPosition();
-                if (position != RecyclerView.NO_POSITION) {
-                    contactList.remove(position);
-                    saveContactsToJson();
-                    contactAdapter.notifyDataSetChanged();
-                    clearInputFields();
-                    showToast("Contact Deleted");
-                } else {
-                    showToast("Please select a contact to delete");
-                }
-            }
-        });
-
-        return view;
+        return fragmentView;
     }
 
-    private void performFileOperations() {
-        String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            File file = new File(getContext().getExternalFilesDir(null), FILE_NAME);
-            if (file.exists()) {
-                readContactsFromJson();
-            } else {
-                createInitialContacts();
-            }
-        } else {
-            showToast("External storage not available");
-        }
+    @Override
+    public void onResume() {
+        super.onResume();
+        readContactsFromJson(); // contacts.json 파일 읽기
+        contactAdapter.notifyDataSetChanged(); // 어댑터에 변경 알림
+    }
+
+    private void openEditContactActivity(Contact contact) {
+        Intent intent = new Intent(requireContext(), EditContactActivity.class);
+        intent.putExtra("contact", contact);
+        startActivity(intent);
     }
 
     private void readContactsFromJson() {
         try {
-            File file = new File(getContext().getExternalFilesDir(null), FILE_NAME);
-            FileInputStream fis = new FileInputStream(file);
-            byte[] data = new byte[(int) file.length()];
-            fis.read(data);
-            fis.close();
+            File file = new File(requireContext().getFilesDir(), FILE_NAME);
 
-            String json = new String(data, "UTF-8");
-            Gson gson = new Gson();
-            Type listType = new TypeToken<List<Contact>>() {}.getType();
-            contactList = gson.fromJson(json, listType);
-            contactAdapter.setContacts(contactList);
+            if (!file.exists()) {
+                // 파일이 존재하지 않으면 새로운 파일 생성
+                boolean created = file.createNewFile();
+                if (!created) {
+                    showToast(requireContext(), "연락처 데이터를 저장할 파일을 생성하는 중 오류가 발생했습니다.");
+                    return;
+                }
+            }
+
+            FileInputStream fis = new FileInputStream(file);
+
+            int size = fis.available();
+            byte[] buffer = new byte[size];
+            fis.read(buffer);
+            fis.close();
+            contactList.clear();
+
+            if (buffer.length == 0) {
+                // 파일이 비어있는 경우 연락처 데이터를 추가하여 파일에 저장
+
+                contactList.add(new Contact(0, "이현수", "1234567890"));
+                contactList.add(new Contact(1, "조재원", "9876543210"));
+                saveContactsToJson(requireContext());
+            } else {
+                String json = new String(buffer, StandardCharsets.UTF_8);
+                Gson gson = new Gson();
+                Type listType = new TypeToken<List<Contact>>() {}.getType();
+                contactList.addAll(gson.fromJson(json, listType));
+            }
         } catch (IOException e) {
             e.printStackTrace();
-            showToast("Error reading contacts from file");
+            showToast(requireContext(), "연락처 데이터를 파일에서 읽어오는 중 오류가 발생했습니다.");
         }
     }
 
-    private void createInitialContacts() {
-        contactList.add(new Contact("이현수", "1234567890"));
-        contactList.add(new Contact("조재원", "9876543210"));
-        saveContactsToJson();
-        contactAdapter.setContacts(contactList);
-    }
-
-    private void saveContactsToJson() {
+    private void saveContactsToJson(Context context) {
         try {
-            File file = new File(getContext().getExternalFilesDir(null), FILE_NAME);
+            File file = new File(context.getFilesDir(), FILE_NAME);
             FileOutputStream fos = new FileOutputStream(file);
             Gson gson = new Gson();
             String json = gson.toJson(contactList);
@@ -182,40 +115,23 @@ public class Frag1 extends Fragment implements ContactAdapter.OnItemClickListene
             fos.close();
         } catch (IOException e) {
             e.printStackTrace();
-            showToast("Error saving contacts to file");
+            showToast(context, "연락처 데이터를 파일에 저장하는 중 오류가 발생했습니다.");
         }
     }
 
-    private void showToast(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-    }
-
-    private void clearInputFields() {
-        nameEditText.setText("");
-        phoneEditText.setText("");
+    private void openContactDetailActivity(Contact contact) {
+        Intent intent = new Intent(requireContext(), ContactDetailActivity.class);
+        intent.putExtra("contact", contact);
+        startActivity(intent);
     }
 
     @Override
     public void onItemClick(int position) {
         Contact contact = contactList.get(position);
-        nameEditText.setText(contact.getName());
-        phoneEditText.setText(contact.getPhone());
+        openContactDetailActivity(contact);
     }
 
-    @Override
-    public void onItemLongClick(int position) {
-        // Handle long click event if needed
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_PERMISSION) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                performFileOperations();
-            } else {
-                showToast("Permission denied");
-            }
-        }
+    private static void showToast(Context context, String message) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 }
