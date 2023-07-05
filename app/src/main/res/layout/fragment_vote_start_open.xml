@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".VoteStart"
+    tools:context=".VoteStartOpen"
     android:orientation="vertical">
 
     <TextView
@@ -14,14 +14,14 @@
         android:textStyle="bold" />
 
     <ListView
-        android:id="@+id/lv_cand"
+        android:id="@+id/lv_cand2"
         android:layout_width="match_parent"
         android:layout_height="630dp">
 
     </ListView>
 
     <android.widget.Button
-        android:id="@+id/btn_endVote"
+        android:id="@+id/btn_endVote2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="투표 끝내기" />

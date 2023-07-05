@@ -2,18 +2,91 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".VoteClose"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".VoteClose">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="기명 투표 페이지" />
+        android:paddingTop="30dp"
+        android:paddingBottom="20dp"
+        android:text="기명 투표 페이지"
+        android:textAlignment="center"
+        android:textSize="34sp" />
 
-    <android.widget.Button
-        android:id="@+id/btn_back2"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="뒤로가기" />
+        android:text="후보를 추가해 주세요"
+        android:textAlignment="center"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="85dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_2"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom"
+            android:hint="후보를 입력하세요" />
+
+        <ImageView
+            android:id="@+id/iv_close2"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/image_icon_skyblue" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+
+        <android.widget.Button
+            android:id="@+id/btn_add2"
+            android:layout_width="286dp"
+            android:layout_height="wrap_content"
+            android:text="후보 추가하기"
+            />
+
+        <android.widget.Button
+            android:id="@+id/btn_gallery2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="이미지 추가" />
+
+    </LinearLayout>
+
+
+    <ListView
+        android:id="@+id/lv_2"
+        android:layout_width="match_parent"
+        android:layout_height="400dp" />
+
+    <!--    <android.widget.Button-->
+    <!--        android:id="@+id/btn_back1"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:text="뒤로가기" />-->
+
+    <android.widget.Button
+        android:id="@+id/btn_done2"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_gravity="right"
+        android:background="#7C91BF"
+        android:text="투표시작"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
 </LinearLayout>

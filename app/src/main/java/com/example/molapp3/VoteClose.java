@@ -80,8 +80,8 @@ public class VoteClose extends Fragment {
 //        adapter = new ListViewAdapter(requireContext(), arrayList);
 //        listView.setAdapter(adapter);
 
-        Button galleryButton = rootView.findViewById(R.id.btn_gallery0);
-        imageView1 = rootView.findViewById(R.id.iv_close0);
+        Button galleryButton = rootView.findViewById(R.id.btn_gallery1);
+        imageView1 = rootView.findViewById(R.id.iv_close1);
         galleryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,7 +110,7 @@ public class VoteClose extends Fragment {
         btn_done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment newFragment = new VoteStart();
+                Fragment newFragment = new VoteStartClose();
                 FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
 
                 Bundle bundle = new Bundle();
@@ -120,9 +120,6 @@ public class VoteClose extends Fragment {
                 transaction.replace(R.id.fragmentContainerView, newFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
-//                Intent intent = new Intent(MainActivity.this, VoteStart.class);
-//                intent.putExtra();
-//                startActivity(intent);
             }
         });
 

@@ -22,16 +22,16 @@ import android.widget.TextView;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class VoteStart extends Fragment {
+public class VoteStartOpen extends Fragment {
     ArrayList<VoteClose.ListItem> arrayList = null;
     private Uri uriImg;
     private ListViewAdapter_start adapter;
     private ListView listView;
-//    private VoteClose.ListViewAdapter adapter;
+    //    private VoteClose.ListViewAdapter adapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView =  inflater.inflate(R.layout.fragment_vote_start, container, false);
+        View rootView =  inflater.inflate(R.layout.fragment_vote_start_open, container, false);
         Bundle bundle = getArguments();
 
         if (bundle != null) {
@@ -41,7 +41,7 @@ public class VoteStart extends Fragment {
         Log.d("ArrayListImageUri", arrayList.get(0).getImgUri());
         Log.d("ArrayList", String.valueOf(arrayList));
         adapter = new ListViewAdapter_start(requireContext(), arrayList);
-        listView = rootView.findViewById(R.id.lv_cand);
+        listView = rootView.findViewById(R.id.lv_cand2);
         listView.setAdapter(adapter);
         // Inflate the layout for this fragment
         return rootView;
@@ -73,8 +73,8 @@ public class VoteStart extends Fragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             @SuppressLint("ViewHolder")
-            View view = LayoutInflater.from(context).inflate(R.layout.listview_close_item, null);
-            ImageView iv = view.findViewById(R.id.iv_lv_close);
+            View view = LayoutInflater.from(context).inflate(R.layout.listview_open_item, null);
+            ImageView iv = view.findViewById(R.id.iv_lv_open);
 //            Glide.with(view).load(list.get(position).getImgUri()).into(iv);
             try {
                 uriImg = Uri.parse(arrayList.get(position).getImgUri());
@@ -84,7 +84,7 @@ public class VoteStart extends Fragment {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            TextView tv = view.findViewById(R.id.tv_lv_close);
+            TextView tv = view.findViewById(R.id.tv_lv_open);
 //            tv.setText((CharSequence) arrayList.get(position));
 //            tv.setText("Index"+position);
             tv.setText(arrayList.get(position).getText());
@@ -93,7 +93,5 @@ public class VoteStart extends Fragment {
 //            tv.setText();
             return view;
         }
-
-
     }
 }

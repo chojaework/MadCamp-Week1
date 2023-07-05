@@ -36,7 +36,7 @@
             android:hint="후보를 입력하세요" />
 
         <ImageView
-            android:id="@+id/iv_close0"
+            android:id="@+id/iv_close1"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="bottom"
@@ -58,7 +58,7 @@
             />
 
         <android.widget.Button
-            android:id="@+id/btn_gallery0"
+            android:id="@+id/btn_gallery1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
