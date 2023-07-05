@@ -23,14 +23,15 @@
         android:textSize="20sp" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="85dp"
         android:layout_gravity="center"
         android:orientation="horizontal">
 
         <EditText
             android:id="@+id/et_1"
-            android:layout_width="300dp"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
             android:layout_height="60dp"
             android:layout_gravity="bottom"
             android:hint="후보를 입력하세요" />
@@ -46,31 +47,52 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="65dp"
         android:orientation="horizontal"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="20dp">
 
         <android.widget.Button
             android:id="@+id/btn_add1"
-            android:layout_width="286dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:background="@drawable/button_background"
             android:text="후보 추가하기"
+            android:textColor="@color/navy"
             />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
         <android.widget.Button
             android:id="@+id/btn_gallery1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:text="이미지 추가" />
+            android:text="이미지 추가"
+            android:textColor="@color/navy"
+            android:layout_weight="1"
+            android:background="@drawable/button_background"/>
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    <ListView
-        android:id="@+id/lv_1"
-        android:layout_width="match_parent"
-        android:layout_height="400dp" />
+        <ListView
+            android:id="@+id/lv_1"
+            android:layout_width="match_parent"
+            android:layout_height="250dp" />
+    </LinearLayout>
+
 
 <!--    <android.widget.Button-->
 <!--        android:id="@+id/btn_back1"-->
@@ -80,10 +102,12 @@
 
     <android.widget.Button
         android:id="@+id/btn_done1"
-        android:layout_width="wrap_content"
+        android:layout_width="121dp"
         android:layout_height="50dp"
         android:layout_gravity="right"
-        android:background="#7C91BF"
+        android:background="@drawable/button_background"
+
+        android:backgroundTint="#3E558A"
         android:text="투표시작"
         android:textAlignment="center"
         android:textColor="@color/white"

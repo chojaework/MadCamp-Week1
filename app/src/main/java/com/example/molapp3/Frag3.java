@@ -32,17 +32,17 @@ public class Frag3 extends Fragment {
             }
         });
 
-        btn_open = rootView.findViewById(R.id.btn_open);
-        btn_open.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment newFragment = new VoteOpen();
-                FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragmentContainerView, newFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
-        });
+//        btn_open = rootView.findViewById(R.id.btn_open);
+//        btn_open.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Fragment newFragment = new VoteOpen();
+//                FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+//                transaction.replace(R.id.fragmentContainerView, newFragment);
+//                transaction.addToBackStack(null);
+//                transaction.commit();
+//            }
+//        });
 
         // Inflate the layout for this fragment
         return rootView;

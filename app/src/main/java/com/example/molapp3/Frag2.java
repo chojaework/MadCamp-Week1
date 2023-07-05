@@ -1,9 +1,11 @@
 package com.example.molapp3;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
@@ -14,6 +16,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
@@ -50,6 +53,32 @@ public class Frag2 extends Fragment {
 
     private boolean isInitialized = false;
 
+//    @Override
+//    public void onCreate(@Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        Resources resources = getResources();
+//        String uriString = ContentResolver.SCHEME_ANDROID_RESOURCE + "://" +
+//                resources.getResourcePackageName(R.drawable.water) + "/" +
+//                resources.getResourceTypeName(R.drawable.water) + "/" +
+//                resources.getResourceEntryName(R.drawable.water);
+//        selectedImages.add(Uri.parse(uriString));
+//        uriString = ContentResolver.SCHEME_ANDROID_RESOURCE + "://" +
+//                resources.getResourcePackageName(R.drawable.lip) + "/" +
+//                resources.getResourceTypeName(R.drawable.lip) + "/" +
+//                resources.getResourceEntryName(R.drawable.lip);
+//        selectedImages.add(Uri.parse(uriString));
+//        uriString = ContentResolver.SCHEME_ANDROID_RESOURCE + "://" +
+//                resources.getResourcePackageName(R.drawable.cam) + "/" +
+//                resources.getResourceTypeName(R.drawable.cam) + "/" +
+//                resources.getResourceEntryName(R.drawable.cam);
+//        selectedImages.add(Uri.parse(uriString));
+//        uriString = ContentResolver.SCHEME_ANDROID_RESOURCE + "://" +
+//                resources.getResourcePackageName(R.drawable.blood) + "/" +
+//                resources.getResourceTypeName(R.drawable.blood) + "/" +
+//                resources.getResourceEntryName(R.drawable.blood);
+//        selectedImages.add(Uri.parse(uriString));
+//    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -63,6 +92,29 @@ public class Frag2 extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = null;
+
+//        Resources resources = getResources();
+//        String uriString = ContentResolver.SCHEME_ANDROID_RESOURCE + "://" +
+//                resources.getResourcePackageName(R.drawable.water) + "/" +
+//                resources.getResourceTypeName(R.drawable.water) + "/" +
+//                resources.getResourceEntryName(R.drawable.water);
+//        selectedImages.add(Uri.parse(uriString));
+//        uriString = ContentResolver.SCHEME_ANDROID_RESOURCE + "://" +
+//                resources.getResourcePackageName(R.drawable.lip) + "/" +
+//                resources.getResourceTypeName(R.drawable.lip) + "/" +
+//                resources.getResourceEntryName(R.drawable.lip);
+//        selectedImages.add(Uri.parse(uriString));
+//        uriString = ContentResolver.SCHEME_ANDROID_RESOURCE + "://" +
+//                resources.getResourcePackageName(R.drawable.cam) + "/" +
+//                resources.getResourceTypeName(R.drawable.cam) + "/" +
+//                resources.getResourceEntryName(R.drawable.cam);
+//        selectedImages.add(Uri.parse(uriString));
+//        uriString = ContentResolver.SCHEME_ANDROID_RESOURCE + "://" +
+//                resources.getResourcePackageName(R.drawable.blood) + "/" +
+//                resources.getResourceTypeName(R.drawable.blood) + "/" +
+//                resources.getResourceEntryName(R.drawable.blood);
+//        selectedImages.add(Uri.parse(uriString));
+
         if (!isInitialized) {
             rootView = inflater.inflate(R.layout.fragment_frag2, container, false);
             final GridView gv = rootView.findViewById(R.id.gridView);
@@ -183,6 +235,7 @@ public class Frag2 extends Fragment {
                     AlertDialog.Builder dlg = new AlertDialog.Builder(requireActivity());
                     ImageView ivPic = dialogView.findViewById(R.id.ivPic);
                     ivPic.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
 //                    ivPic.setImageResource(picID[pos]);
                     Uri uri3 = selectedImages.get(pos);
                     try {
@@ -190,6 +243,7 @@ public class Frag2 extends Fragment {
                         // 사진 사이즈 키우는 방법
                         Bitmap bitmap = BitmapFactory.decodeStream(context.getContentResolver().openInputStream(uri3));
                         ivPic.setImageBitmap(bitmap);
+//                        ivPic.setImageResource(bitmap);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

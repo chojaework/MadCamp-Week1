@@ -12,31 +12,40 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="16dp"
-        android:text="연락처 추가"
+        android:text="연락처를 추가해주세요"
         android:textSize="24sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:paddingBottom="20dp"/>
 
     <EditText
         android:id="@+id/nameEditText"
-        android:layout_width="match_parent"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:hint="이름"
         android:inputType="textPersonName"
-        android:layout_marginBottom="16dp" />
+        android:layout_gravity="center"/>
 
     <EditText
         android:id="@+id/phoneEditText"
-        android:layout_width="match_parent"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
         android:hint="전화번호"
         android:inputType="phone"
-        android:layout_marginBottom="32dp" />
+        android:layout_gravity="center"/>
 
     <android.widget.Button
         android:id="@+id/saveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/button_background"
+        android:backgroundTint="@color/navy"
         android:text="저장"
-        android:layout_gravity="center_horizontal" />
+        android:textColor="@color/white"
+        android:textSize="23sp"
+        android:layout_marginTop="40dp
+"/>
 
 </LinearLayout>

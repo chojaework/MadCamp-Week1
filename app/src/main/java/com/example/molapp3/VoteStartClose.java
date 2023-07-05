@@ -2,22 +2,29 @@ package com.example.molapp3;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,6 +35,7 @@ public class VoteStartClose extends Fragment {
     private ListViewAdapter_start adapter;
     private ListView listView;
 //    private VoteClose.ListViewAdapter adapter;
+    private int[] clickCount;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -37,12 +45,58 @@ public class VoteStartClose extends Fragment {
         if (bundle != null) {
             arrayList = bundle.getParcelableArrayList("arrayList");
         }
+
+        clickCount = new int[arrayList.size()];
+
         Log.d("ArrayListText",arrayList.get(0).getText());
         Log.d("ArrayListImageUri", arrayList.get(0).getImgUri());
         Log.d("ArrayList", String.valueOf(arrayList));
         adapter = new ListViewAdapter_start(requireContext(), arrayList);
         listView = rootView.findViewById(R.id.lv_cand1);
         listView.setAdapter(adapter);
+
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+                builder.setTitle("투표 확인")
+                    .setMessage("투표하시겠습니까?")
+                    .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            clickCount[position]++;
+                            Toast.makeText(requireContext(), "투표되었습니다", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(requireContext(), "클릭 횟수: " + clickCount[position], Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // 변화 x
+                        }
+                    })
+                        .show();
+            }
+        });
+
+        Button btn_end = rootView.findViewById(R.id.btn_endVote1);
+        btn_end.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment newFragment = new VoteResultClose();
+                FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                Bundle bundle = new Bundle();
+                bundle.putParcelableArrayList("arrayList", (ArrayList<? extends Parcelable>) arrayList);
+                bundle.putIntArray("clickCountArray", clickCount);
+                newFragment.setArguments(bundle);
+
+                transaction.replace(R.id.fragmentContainerView, newFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+
         // Inflate the layout for this fragment
         return rootView;
     }
